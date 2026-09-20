@@ -1,19 +1,71 @@
-# Getting Started
-Install the dependencies and run the project
-```
-npm install
-npm start
-```
+# Twimba - Using  basic twitter functionality
 
-Head over to https://vitejs.dev/ to learn more about configuring vite
-## About Scrimba
 
-At Scrimba our goal is to create the best possible coding school at the cost of a gym membership! 💜
-If we succeed with this, it will give anyone who wants to become a software developer a realistic shot at succeeding, regardless of where they live and the size of their wallets 🎉
-The Fullstack Developer Path aims to teach you everything you need to become a Junior Developer, or you could go further with one of our advanced courses 🚀
 
-- [Our courses](https://scrimba.com/courses)
-- [The Frontend Career Path](https://scrimba.com/fullstack-path-c0fullstack)
-- [Become a Scrimba Pro member](https://scrimba.com/pricing)
+## Table of contents
 
-Happy Coding!
+- [Overview](#overview)
+  - [The challenge](#the-challenge)
+  - [Screenshot](#screenshot)
+  - [Links](#links)
+- [My process](#my-process)
+  - [Built with](#built-with)
+  - [What I learned](#what-i-learned)
+  - [Continued development](#continued-development)
+  - [Useful resources](#useful-resources)
+  - [AI Collaboration](#ai-collaboration)
+- [Author](#author)
+- [Acknowledgments](#acknowledgments)
+
+**Note: Delete this note and update the table of contents based on what sections you keep.**
+
+## Overview
+
+### The challenge
+
+Users should be able to:
+
+- View the optimal layout depending on their device's screen size
+- See hover and focus states for interactive elements
+
+### Screenshot
+
+![Design preview for the Product preview card component coding challenge](./design/desktop-design.png)
+
+
+
+### Links
+
+- Solution URL: (https://github.com/vault-codes/twitter-clone/)
+
+- Live Site URL:  https://twimba-prime.netlify.app/
+
+## My process
+
+### Built with
+
+- Semantic HTML5 markup
+- CSS custom properties
+- javascript object concept.
+- javascript array method.
+- uuid (universal unique identifier)
+- 
+
+
+### What I learned
+
+i learned how to implement javascript object rendering using html tags. then i also learned how to link uuid property  to an individual object element
+
+
+### Continued development
+
+i will try focusing on understanding  how to also implement rendering of javascript object from an array and more features.
+
+
+## Author
+
+- Website -
+- https://twimba-prime.netlify.app/
+
+
+
