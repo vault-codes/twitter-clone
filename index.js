@@ -1,14 +1,21 @@
 import { tweetsData } from './data.js'
 import { v4 as uuidv4 } from 'https://jspm.dev/uuid';
 
+let activeTweetsData = []
+
+handleStorageLoad()
+
 document.addEventListener('click', function(e){
-    if(e.target.dataset.like){
-       handleLikeClick(e.target.dataset.like)
-    }
+
+
+     if(e.target.dataset.like){
+         console.log('LIKE CLICKED')
+         handleLikeClick(e.target.dataset.like)
+     }
     else if(e.target.dataset.retweet){
         handleRetweetClick(e.target.dataset.retweet)
     }
-    else if(e.target.dataset.reply){
+     else if (e.target.dataset.reply) {
         handleReplyClick(e.target.dataset.reply)
     }
     else if(e.target.id === 'tweet-btn'){
@@ -22,14 +29,25 @@ document.addEventListener('click', function(e){
       console.log('reply button clicked')
       handleAddReply(e.target.dataset.replyBtn)
 
+     }
+
+     else if (e.target.dataset.optionsMenu) {
+
+       handleOptionsMenu(e.target.dataset.optionsMenu)
+
+     }
+
+     else if (e.target.dataset.tweetDelete) {
+       console.log(e.target.dataset.tweetDelete)
+      handleDeleteTweet(e.target.dataset.tweetDelete)
+     }
+
+     else if (e.target.dataset.close) {
+       handleOptionsMenu(e.target.dataset.close)
+
+
+
   }
-
-
-
-
-
-
-
 
 })
 
@@ -41,37 +59,108 @@ document.addEventListener('click', function(e){
 // })
 //
 //
-function handleAddReply(tweetid) {
-  // get textarea element value
-  const replyTextValue =  document.getElementById(`reply-textarea-${tweetid}`).value
+ // place reply to tweet action handle here
 
-  // push the value to the replies array
+// saving to local storage functionality
+
+function handleStorageLoad() {
 
 
 
-  tweetsData.forEach(function (tweet) {
+  const mySavedTweets = localStorage.getItem('mySavedTweets')
 
-    if (tweet.uuid === tweetid) {
+  if (mySavedTweets) {
 
+    activeTweetsData = JSON.parse(mySavedTweets)
+
+
+  }
+
+  else {
+    activeTweetsData = tweetsData
+
+  }
+
+  render()
+
+
+}
+
+
+function handleStorageSave() {
+
+
+  localStorage.setItem("mySavedTweets", JSON.stringify(activeTweetsData))
+
+
+  if (JSON.parse(localStorage.getItem("mySavedTweets"))) {
+   activeTweetsData = JSON.parse(localStorage.getItem("mySavedTweets"))
+
+  }
+
+  else{
+    activeTweetsData = tweetsData
+
+  }
+
+
+
+}
+
+
+function handleOptionsMenu(tweetId) {
+
+
+
+  console.log(document.getElementById(`options-${tweetId}`).classList.toggle('options-hide'))
+
+}
+
+function handleDeleteTweet(tweetid) {
+
+  const targetTweetObj = activeTweetsData.filter(function (tweet) {
+    return tweet.uuid !== tweetid
+  })
+
+  activeTweetsData = targetTweetObj
+  handleStorageSave()
+  render()
+
+}
+
+
+
+
+function handleAddReply(tweetId) {
+
+  const replyTweetText = document.getElementById(`reply-text-${tweetId}`).value
+
+
+  activeTweetsData.forEach(function (tweet) {
+    if (tweet.uuid === tweetId) {
       tweet.replies.unshift({
-        handle: "@PrimeCraft",
-        profilePic: "images/scrimbalogo.png",
-        tweetText: replyTextValue,
-
+        handle: '@Primecraft',
+        profilePic: 'images/scrimbalogo.png',
+        tweetText: replyTweetText
       })
 
 
     }
 
-
-
   })
+    handleStorageSave()
 
- render()
-}
+    render()
 
-function handleLikeClick(tweetId){
-    const targetTweetObj = tweetsData.filter(function(tweet){
+
+
+
+
+ }
+
+function handleLikeClick(tweetId) {
+
+    const targetTweetObj = activeTweetsData.filter(function(tweet){
         return tweet.uuid === tweetId
     })[0]
 
@@ -81,12 +170,13 @@ function handleLikeClick(tweetId){
     else{
         targetTweetObj.likes++
     }
-    targetTweetObj.isLiked = !targetTweetObj.isLiked
+  targetTweetObj.isLiked = !targetTweetObj.isLiked
+  handleStorageSave()
     render()
 }
 
 function handleRetweetClick(tweetId){
-    const targetTweetObj = tweetsData.filter(function(tweet){
+    const targetTweetObj = activeTweetsData.filter(function(tweet){
         return tweet.uuid === tweetId
     })[0]
 
@@ -96,7 +186,8 @@ function handleRetweetClick(tweetId){
     else{
         targetTweetObj.retweets++
     }
-    targetTweetObj.isRetweeted = !targetTweetObj.isRetweeted
+  targetTweetObj.isRetweeted = !targetTweetObj.isRetweeted
+  handleStorageSave()
     render()
 }
 
@@ -112,7 +203,7 @@ function handleTweetBtnClick(){
     const tweetInput = document.getElementById('tweet-input')
 
     if(tweetInput.value){
-        tweetsData.unshift({
+        activeTweetsData.unshift({
             handle: `@Scrimba`,
             profilePic: `images/scrimbalogo.png`,
             likes: 0,
@@ -123,6 +214,7 @@ function handleTweetBtnClick(){
             isRetweeted: false,
             uuid: uuidv4()
         })
+      handleStorageSave()
     render()
     tweetInput.value = ''
     }
@@ -151,24 +243,38 @@ function handleTweetBtnClick(){
 
 
 
-function getFeedHtml(){
+function getFeedHtml() {
   let feedHtml = ``
 
 
 
 
+  activeTweetsData.forEach(function (tweet) {
 
-  tweetsData.forEach(function (tweet) {
+    let replyHtml = `
+    <div class="reply-box">
+    <textarea placeholder="whats on your mind, reply to ${tweet.handle}"
+    class="reply-tweet-textarea" rows="5" data-reply-text="${tweet.uuid}" id="reply-text-${tweet.uuid}"></textarea>
 
-    let replyHtml =`
+    <button class="reply-btn" id="reply-btn" data-reply-btn="${tweet.uuid}"> Reply </button>
+
+    </div>
+
+    `
+
+    // let optionHtml = `
+    //         <div class="modal-inner" id="modal-inner">
+    //           <button class="delete-tweet-btn" date-tweet-delete="${tweet.id}" id="delete-tweet-btn"> <i class="fa-solid fa-trash"></i> Delete tweet</button>
+
+    //          </div>
+    //   `
 
 
-     <div class="reply-container">
 
-      <textarea placeholder="what is  on your mind, reply to ${tweet.handle}"  class="reply-textarea" id="reply-textarea-${tweet.uuid}"></textarea>
-      <button class="reply-btn" data-reply-btn="${tweet.uuid}"  id="reply-btn-${tweet.uuid}"> Reply</button>
 
-      </div> `
+
+
+
 
     let likeIconClass = ''
 
@@ -215,7 +321,20 @@ function getFeedHtml(){
             <div class="tweet-inner">
                 <img src="${tweet.profilePic}" class="profile-pic">
                 <div>
+
+                  <div class="options-hide" id="options-${tweet.uuid}">
+
+
+                  <div class="modal-inner" id="modal-inner">
+                  <i class="fa-solid fa-x" data-close="${tweet.uuid}"></i>
+
+                    <button class="delete-tweet-btn" data-tweet-delete="${tweet.uuid}" id="delete-tweet-btn"> <i class="fa-solid fa-trash"></i> Delete tweet</button>
+                   </div>
+                  </div>
+                    <div class="options-container">
                     <p class="handle">${tweet.handle}</p>
+                    <i class="fa-solid fa-ellipsis" data-options-menu="${tweet.uuid}" id="options-menu-${tweet.uuid}"></i>
+                    </div>
                     <p class="tweet-text">${tweet.tweetText}</p>
                     <div class="tweet-details">
                         <span class="tweet-detail">
@@ -241,7 +360,8 @@ function getFeedHtml(){
                   </div>
       <div class="hidden" id="replies-${tweet.uuid}">
 
-      ${replyHtml}
+
+        ${replyHtml}
         ${repliesHtml}
     </div>
     <div class="hidden blue-line" id="reply-tweet-${tweet.uuid}">
@@ -262,7 +382,8 @@ function getFeedHtml(){
 
 
 
-function render(){
+function render() {
+
   document.getElementById('feed').innerHTML = getFeedHtml()
 
 }

@@ -1,11 +1,10 @@
 html, body {
     margin: 0;
     padding: 0;
-    font-family: 'Roboto', sans-serif;
+    font-family:  'Roboto', sans-serif;
 }
 
 /* typography and icons */
-
 h1{
     color: #0F8CDF;
     margin-bottom: 10px;
@@ -90,6 +89,8 @@ textarea{
     padding: 20px 0 0 0;
     width: 100%;
     margin: 15px 0;
+    position: relative;
+
 }
 
 .tweet-inner{
@@ -117,12 +118,19 @@ textarea{
     width: 80%;
 }
 
+.options-container{
+    display: flex;
+    justify-content: space-between;
+}
+
 .handle{
     font-size: 12px;
     font-weight: 500;
     color: #555;
     margin-top: 0;
 }
+
+
 
 .tweet-text{
     width: 207px;
@@ -143,22 +151,47 @@ textarea{
     display: none;
 }
 
-.modal-overlay{
 
-    width: 100%;
-    height:100%;
-    background-color: rgba(1, 0, 0, 0.1);
-    margin: 0 auto;
-    display: block;
+.options-hide{
+    display: none;
 }
 
-.modal{
 
+
+.modal-inner{
+    position: fixed;
+    top: 200px;
+    left: 0px;
+    right: 0px;
+    margin: 0 auto;
+    min-height: 300px;
     max-width: 300px;
+    z-index: 4;
     background-color: white;
+    box-shadow: 4px 5px 32px 11px rgba(0, 0, 0, 0.20);
+    border-radius: 8px;
     padding: 10px 12px;
+}
+
+.fa-x{
+    float: right;
+}
 
 
+.delete-tweet-btn{
+    padding: 12px 15px;
+    background-color: rgba(0, 0, 0, 0.20);
+    font-weight: bold;
+    border-radius: 5px;
+    border: none;
+    width: 90%;
+    font-size: 16px;
+    color: white;
+    margin: 20px 20px;
+}
+
+.delete-tweet-btn:hover{
+    background-color: rgba(0,0,0,0.6);
 }
 
 .reply-container{
@@ -166,37 +199,29 @@ textarea{
 
 }
 
-
-
-
-.reply-textarea{
-
-    resize: none;
-    width: 100%;
-    min-height: 100px;
-    overflow: auto;
+.reply-tweet-textarea{
+    margin-top: 20px;
     border: 2px solid rgba(0,0,0,0.4);
-    border-radius: 5px;
+    max-width: 100%;
+    line-height: 1.2;
+    overflow: auto;
     font-size: 16px;
-
-
-}
-.reply-textarea::placeholder{
-    color: rgba(0,0,0,0.5);
+    border-radius: 10px;
+    min-height: 20%;
 
 }
 
 .reply-btn{
+    padding: 12px 20px;
+    border-radius: 12px;
     background-color: #0F8CDF;
-    width: 40%;
     border: none;
-    font-weight: bold;
-    padding: 10px 16px;
     color: white;
-    border-radius: 20px;
-    margin-right: 60px;
-    display: block;
+    font-weight: bold;
+    font-size: 14px;
+}
 
-
-
+.reply-btn:hover, .reply-btn:focus{
+    background-color: #0F8CDF;
+    opacity: 0.5;
 }

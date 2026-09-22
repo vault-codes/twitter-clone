@@ -1,6 +1,8 @@
 import { v4 as uuidv4 } from 'https://jspm.dev/uuid';
 
 
+// terminal server code: $env:Path = "C:\Program Files\nodejs;$env:Path"; & "C:\Program Files\nodejs\npx.cmd" serve .
+
 export const tweetsData = [
     {
         handle: `@TrollBot66756542 💎`,
@@ -63,3 +65,45 @@ export const tweetsData = [
         uuid: uuidv4(),
     },
 ]
+
+// function handleAddReply(tweetid) {
+//   // get textarea element value
+//   const replyTextValue =  document.getElementById(`reply-textarea-${tweetid}`).value
+
+//   // push the value to the replies array
+
+
+
+//   tweetsData.forEach(function (tweet) {
+
+//     if (tweet.uuid === tweetid) {
+
+//       tweet.replies.unshift({
+//         handle: "@PrimeCraft",
+//         profilePic: "images/scrimbalogo.png",
+//         tweetText: replyTextValue,
+
+//       })
+
+
+//     }
+
+
+
+//   })
+
+//  render()
+// }
+//
+//
+//   let replyHtml =`
+
+
+ // <div class="reply-container">
+
+ //  <textarea placeholder="what is  on your mind, reply to ${tweet.handle}"  class="reply-textarea" id="reply-textarea-${tweet.uuid}"></textarea>
+ //  <button class="reply-btn" data-reply-btn="${tweet.uuid}"  id="reply-btn-${tweet.uuid}"> Reply</button>
+
+ //  </div> `
+ //
+ //  ${replyHtml}
